@@ -12,28 +12,71 @@ body {
 
 /* هدر و منو */
 header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding-top: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: visible;
+    z-index: 1000 !important;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: url('../images/ship.png') no-repeat center center;
     background-size: cover;
-    padding-top: 10px;
+    opacity: 0.1;
+    z-index: 1;
 }
 
 .top-bar {
     text-align: left;
-    padding: 10px;
+    padding: 15px 20px;
+    position: relative;
+    z-index: 1002 !important;
 }
 
 .consult-btn {
-    background-color: #ff6600;
+    background: linear-gradient(45deg, #ff6600, #ff8533);
     color: #fff;
-    padding: 8px 15px;
+    padding: 12px 25px;
     text-decoration: none;
-    border-radius: 5px;
-    transition: all 0.3s;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+    position: relative;
+    overflow: hidden;
 }
+
+.consult-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.consult-btn:hover::before {
+    left: 100%;
+}
+
 .consult-btn:hover {
-    background-color: #fff;
-    color: #ff6600;
-    border: 1px solid #ff6600;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 102, 0, 0.4);
+}
+
+.main-menu {
+    position: relative;
+    z-index: 2;
+    padding: 20px 0;
 }
 
 .main-menu ul {
@@ -41,61 +84,593 @@ header {
     margin: 0;
     padding: 0;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
+
 .main-menu ul li {
     display: inline-block;
     position: relative;
+    margin: 0 5px;
+    z-index: 1002 !important;
 }
+
 .main-menu ul li a {
     display: block;
-    padding: 10px 20px;
+    padding: 15px 25px;
     color: white;
     text-decoration: none;
+    font-weight: 500;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1003 !important;
 }
-.main-menu ul li.has-submenu:hover .submenu {
-    display: block;
+
+.main-menu ul li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
 }
+
+.main-menu ul li a:hover::before {
+    left: 100%;
+}
+
+.main-menu ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.main-menu ul li.has-submenu > a::after {
+    content: '▼';
+    margin-right: 8px;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.main-menu ul li.has-submenu:hover > a::after {
+    transform: rotate(180deg);
+}
+
 .submenu {
-    display: none;
     position: absolute;
     right: 0;
-    background: white;
-    min-width: 150px;
+    top: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    min-width: 200px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    padding: 10px 0;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 9999 !important;
+    pointer-events: none;
+    transform-origin: top right;
 }
-.submenu li a {
-    color: black;
-    background: white;
+
+.submenu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.submenu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgba(255, 255, 255, 0.95);
+}
+
+.submenu li {
     display: block;
-    padding: 8px;
+    margin: 0;
 }
+
+.submenu li a {
+    color: #333 !important;
+    background: transparent !important;
+    display: block;
+    padding: 12px 20px;
+    margin: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    text-shadow: none;
+    font-size: 14px;
+}
+
+/* اضافه کردن selector قوی‌تر برای اطمینان از اعمال رنگ */
+.main-menu .submenu li a,
+.main-menu ul li .submenu li a {
+    color: #333 !important;
+    background: transparent !important;
+}
+
+/* اضافه کردن selector قوی‌ترین برای اطمینان از اعمال رنگ */
+body header .main-menu .submenu li a,
+body header .main-menu ul li .submenu li a {
+    color: #333 !important;
+    background: transparent !important;
+}
+
 .submenu li a:hover {
-    background: black;
-    color: white;
+    background: linear-gradient(45deg, #667eea, #764ba2) !important;
+    color: white !important;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* اضافه کردن selector قوی‌تر برای hover state */
+.main-menu .submenu li a:hover,
+.main-menu ul li .submenu li a:hover {
+    background: linear-gradient(45deg, #667eea, #764ba2) !important;
+    color: white !important;
+}
+
+/* اضافه کردن selector قوی‌ترین برای hover state */
+body header .main-menu .submenu li a:hover,
+body header .main-menu ul li .submenu li a:hover {
+    background: linear-gradient(45deg, #667eea, #764ba2) !important;
+    color: white !important;
+}
+
+/* انیمیشن برای منو */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* استایل برای منوی فعال */
+.main-menu ul li.active a {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* استایل برای منوی موبایل */
+@media (max-width: 768px) {
+    .main-menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .main-menu ul li {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .submenu {
+        position: static;
+        width: 100%;
+        margin-top: 5px;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .submenu::before {
+        display: none;
+    }
+}
+
+/* استایل‌های اضافی برای زیبایی بیشتر */
+.main-menu ul li a {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+}
+
+.main-menu ul li a:hover {
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.submenu li a {
+    text-shadow: none;
+    font-size: 14px;
+}
+
+.submenu li a:hover {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* انیمیشن برای دکمه مشاوره */
+.consult-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.consult-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.consult-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* استایل برای منوی فعال */
+.main-menu ul li.active a {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* انیمیشن ورود برای منوها */
+.main-menu ul li {
+    animation: slideInFromTop 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.main-menu ul li:nth-child(1) { animation-delay: 0.1s; }
+.main-menu ul li:nth-child(2) { animation-delay: 0.2s; }
+.main-menu ul li:nth-child(3) { animation-delay: 0.3s; }
+.main-menu ul li:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* استایل برای حالت اسکرول */
+header.scrolled {
+    background: rgba(102, 126, 234, 0.95) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* استایل برای زیرمنوهای موبایل */
+@media (max-width: 768px) {
+    .submenu {
+        position: static !important;
+        width: 100% !important;
+        margin-top: 5px !important;
+        box-shadow: none !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-radius: 10px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: none !important;
+        z-index: auto !important;
+        pointer-events: none !important;
+    }
+    
+    .submenu.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+    
+    .submenu::before {
+        display: none !important;
+    }
+    
+    .submenu li a {
+        color: white !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        margin: 2px 5px !important;
+        border-radius: 8px !important;
+        font-size: 14px !important;
+    }
+    
+    .submenu li a:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        transform: none !important;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+    }
 }
 
 /* فوتر */
 footer {
-    background: url('../images/ship1.png') no-repeat center center;
-    background-size: cover;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     padding: 20px;
     color: white;
+    position: relative;
+    z-index: 1;
 }
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../images/ship1.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.social {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
 .social a {
     color: white;
-    margin-right: 10px;
+    margin: 0 10px;
     text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-bottom: 10px;
 }
+
+.social a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
 .footer-columns {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    position: relative;
+    z-index: 2;
+    flex-wrap: wrap;
 }
+
+.footer-columns div {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
 .footer-columns div a {
     display: block;
     color: white;
     text-decoration: none;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    padding: 5px 0;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    padding-left: 10px;
 }
+
 .footer-columns div a:hover {
-    text-decoration: underline;
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 15px;
+    transform: translateX(5px);
+}
+
+/* محتوای اصلی */
+main {
+    padding: 40px 20px;
+    text-align: center;
+    min-height: 60vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    position: relative;
+    z-index: 1;
+}
+
+main h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+main p {
+    font-size: 1.2em;
+    color: #34495e;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* استایل‌های نهایی برای منو */
+.main-menu {
+    position: relative;
+    z-index: 1001 !important;
+    padding: 20px 0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    margin: 0 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.main-menu ul li a {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    z-index: 1;
+}
+
+.main-menu ul li a::before {
+    z-index: -1;
+}
+
+/* بهبود انیمیشن‌ها */
+.main-menu ul li {
+    transition: all 0.3s ease;
+}
+
+.main-menu ul li:hover {
+    transform: translateY(-3px);
+}
+
+.main-menu ul li a:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* استایل برای آیکون‌های شبکه‌های اجتماعی */
+.social a[href*="wa.me"]::before { content: "📱 "; }
+.social a[href*="instagram"]::before { content: "📸 "; }
+.social a[href*="youtube"]::before { content: "🎥 "; }
+.social a[href*="t.me"]::before { content: "✈️ "; }
+.social a[href*="linkedin"]::before { content: "💼 "; }
+
+/* انیمیشن برای لودینگ صفحه */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* بهبود استایل برای موبایل */
+@media (max-width: 768px) {
+    .main-menu {
+        margin: 0 10px;
+        border-radius: 15px;
+    }
+    
+    .main-menu ul li a {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+    
+    .consult-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    main h1 {
+        font-size: 2em;
+    }
+    
+    main p {
+        font-size: 1em;
+    }
+    
+    .footer-columns {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-columns div {
+        min-width: auto;
+        margin-bottom: 15px;
+    }
+}
+
+/* استایل برای تبلت */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .main-menu ul li a {
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+    
+    .consult-btn {
+        padding: 10px 22px;
+    }
+}
+
+/* انیمیشن‌های اضافی */
+.bounce {
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* استایل برای حالت focus */
+.main-menu ul li a:focus,
+.consult-btn:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* بهبود دسترسی‌پذیری */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
